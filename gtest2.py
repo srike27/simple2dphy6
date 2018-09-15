@@ -22,16 +22,49 @@ class circle:
             self.vely = tmvy
 
     def impulse(self,acx,acy):
-        if self.speed < self.vthresh:
-            self.ax = acx
-            self.ay = acy
-        else:
-            self.ax = 0
-            self.ay = 0
+        self.ax = acx
+        self.ay = acy
         self.updatestate()
         self.ax = 0
         self.ay = 0
 
+    def frictiony(self,nu):
+        self.mtest()
+        if self.speed != 0: 
+            #print(self.velx,self.vely)
+            self.ax = -round((self.velx/self.speed)*nu)
+            #self.ay = -round((self.vely/self.speed)*nu)
+            #print(self.ax)
+            #print(self.ay)
+            self.updatestate()
+            #print("velx",self.velx)
+            #print("vely",self.vely)
+            self.ax = 0
+            #self.ay = 0
+        else:
+            self.ax=0
+            #self.ay=0
+            self.mtest()
+
+
+
+    def frictionx(self,nu):
+        self.mtest()
+        if self.speed != 0: 
+            #print(self.velx,self.vely)
+            #self.ax = -round((self.velx/self.speed)*nu)
+            self.ay = -round((self.vely/self.speed)*nu)
+            #print(self.ax)
+            #print(self.ay)
+            self.updatestate()
+            #print("velx",self.velx)
+            #print("vely",self.vely)
+            #self.ax = 0
+            self.ay = 0
+        else:
+            #self.ax=0
+            self.ay=0
+            self.mtest()
 
     def friction(self,nu):
         self.mtest()
@@ -58,6 +91,7 @@ class circle:
             self.mflag = 1
         else:
             self.mflag = 0
+    
 
     def __init__(self,x,y):
         self.px = x
@@ -69,5 +103,5 @@ class circle:
         self.speed =math.sqrt(self.velx*self.velx+self.vely*self.vely)
         self.mtest()
         self.vthresh = 10
-        
+
     
